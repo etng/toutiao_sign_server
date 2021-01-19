@@ -1,0 +1,13 @@
+version: '2'
+services:
+  server:
+    image: toutiao_signer_server:latest
+    build:
+      context: ./
+    restart: unless-stopped
+    ports:
+      - "3515:3515"
+    command: "node server.js"
+    environment:
+      SERVER_PORT: "3515"
+
