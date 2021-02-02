@@ -3,16 +3,32 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "pkg": {
+    "scripts": [
+
+    ],
+    "assets": [],
+    "targets": [
+      "node14-linux-x64",
+      "node14-macos-x64",
+      "node14-win-x86"
+    ]
+  },
   "dependencies": {
     "body-parser": "^1.19.0",
     "canvas": "^2.6.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "pkg": "^4.4.9",
     "jsdom": "^16.4.0"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build-win": "pkg server.js -t win -o ./dist/tt-signer-win.exe",
+    "build-linux": "pkg server.js -t linux -o ./dist/tt-signer",
+    "build-mac": "pkg .server.js -t macos -o ./dist/tt-signer-mac.app",
+    "build": "npm run build-win && npm run build-linux && npm run build-mac",
     "start": "node server.js"
   },
   "author": "",

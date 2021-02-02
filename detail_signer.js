@@ -679,6 +679,7 @@ function sign(url, cookie) {
         aid: 99999999,
         dfp: !0
     })
+    console.log(`signing detail ${url} with cookie ${cookie}`)
     document.cookie = '';
     let __ac_nonce=cookie,
         __ac_signature = global.byted_acrawler.sign("", __ac_nonce);

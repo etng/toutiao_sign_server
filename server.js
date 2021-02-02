@@ -1,13 +1,26 @@
 const express = require('express'),
     bodyParser = require('body-parser'),
     cors = require('cors'),
+    fs = require("fs"),
+path = require("path"),
     listSigner = require('./list_signer'),
     detailSigner = require('./detail_signer'),
-    port=3515,
     app = express();
+let port=3515;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
+
+const configPath = path.join(process.execPath, "../","./config.json");
+let isConfigExist = fs.existsSync(configPath);
+
+let jsonConfig = null
+if (isConfigExist) {
+  jsonConfig = JSON.parse(fs.readFileSync(configPath, "utf8"));
+}
+if (jsonConfig.port) {
+    port = jsonConfig.port
+}
 
 app.post('/api/v1/toutiao/list/sign', (req, res) => {
     let url=req.body.url,
@@ -29,6 +42,15 @@ app.post('/api/v1/toutiao/detail/sign', (req, res) => {
     res.json({
         ua:detailSigner.userAgent,
         cookie:detailSigner.sign(url, nonce)
+    });
+})
+app.get('/api/v1/version', (req, res) => {
+    res.json({
+        status: "0",
+        message: "ok",
+        data: {
+            version: "1.0.0",
+        }
     });
 })
 
